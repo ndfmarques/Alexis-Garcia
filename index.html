@@ -584,6 +584,9 @@ function submitNoWork(reason, obs){
     date:sel.date, dayOfWeek:sel.dayOfWeek, weekOf:sel.weekOf,
     worker:'Alexis Garcia',
     worked:'no',
+    truck:'não',
+    machine:'não',
+    jobLocations:'',
     noworkReason:reason,
     generalObs:obs
   };
@@ -678,11 +681,17 @@ function submitDay(){
   var sel=getSelDate();
   var jobs=wloc==='jobsite'?colJobs():[];
 
+  var jobLocations=wloc==='jobsite'?jobs.map(function(j){return j.location;}).filter(Boolean).join(', '):'';
+
   var payload={
     date:sel.date, dayOfWeek:sel.dayOfWeek, weekOf:sel.weekOf,
     worker:'Alexis Garcia',
     worked:'yes',
-    workLocation:wloc,jobs:jobs,
+    truck:'sim',
+    machine:'sim',
+    workLocation:wloc,
+    jobLocations:jobLocations,
+    jobs:jobs,
     workStart:(gv('wsh')||'—')+':'+(gv('wsm')||'00')+' '+wsAP,
     workEnd:(gv('weh')||'—')+':'+(gv('wem')||'00')+' '+weAP,
     totalHours:e('toth').textContent,
